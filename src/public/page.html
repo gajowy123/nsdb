@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      // When DOM is loaded this
+      // function will get executed
+      $(() => {
+        // function will get executed
+        // on click of submit button
+        $("#submitSearch").click(function (ev) {
+          let form = $("#formid1");
+          let url = form.attr("action");
+          $.ajax({
+            type: "POST",
+            url: "/formsearch",
+            contentType: "application/json",
+            data: JSON.stringify({ names: $("#names").val() }),
+            success: function (data) {
+              var json_data = JSON.parse(data);
+              var result = "<ul>";
+              $.each(json_data, function (index, item) {
+                console.log(item);
+                result += `<li>${item["Title"]} ${item["First Name(s)"]} ${item["Surname"]}</li>`;
+              });
+              result += "</ul>";
+              $("#userList").html(result);
+            },
+            error: function (data) {
+              // Some error in ajax call
+              alert("some Error");
+            },
+          });
+        });
+        /*$("submitCreate").click(function(ev){
+            let form = $("#formid2");
+            let url = form.attr("action");
+            $.ajax({
+                type: "POST",
+                url: "/formcreate",
+                contentType: "application/json",
+                data: JSON.stringify({ 
+                    title: $("#titlec").val(),
+                    eircode: $("#eircodec").val(),
+                    fname: $("#fnamec").val(),
+                    lname: $("#lnamec").val(),
+                    mobile: $("#mobilec").val(),
+                    email: $("#emailc").val(),
+                    address1: $("#addr1c").val(),
+                    address2: $("#addr2c").val(),
+                    town: $("#townc").val(),
+                    countyct: $("#countyc").val()
+                }),
+                    success: function (data) {
+                        var json_data = JSON.parse(data);
+                        
+                    },
+                    error: function (data) {
+                    // Some error in ajax call
+                        alert("some Error");
+            },
+          });
+        });*/
+      });
+
+    </script>
+    <style>
+        .main{
+            margin:auto;
+            width: 50%;
+            text-align: center;
+            justify-content: center;
+            border-radius: 15%;
+            border: solid 5px blue;
+            margin-bottom:5px;
+            
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+    Search By Name
+    <form id="formid1" action="">
+      <input type="text" placeholder="Name(s)" id="names" style="margin:2px;"/>
+      <button type="button"id="submitSearch" style="margin:2px;">
+        submit
+      </button>
+    </form>
+    <section id="userList"></section>
+    </div>
+    <div class="main" >
+        Create New User
+        <form id="formid2" action="">
+            <input type="text" placeholder="Title" id="titlec" style="margin:2px;"/>
+            <input type="text" placeholder="Eircode" id="eircodec" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="First Name*" id="fnamec" style="margin:2px;"/>
+            <input type="text" placeholder="Last Name*" id="lnamec" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Mobile*" id="mobilec" style="margin:2px;"/>
+            <input type="text" placeholder="Email*" id="emailc" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Address Line 1*" id="addr1c" style="margin:2px;"/>
+            <input type="text" placeholder="Address Line 2" id="addr2c" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Town*" id="townc" style="margin:2px;"/>
+            <input type="text" placeholder="County/City*" id="countyc" style="margin:2px;"/>
+            <br>
+            <button type="button" id="submitCreate" style="margin:2px;">Create</button>
+        </form>
+    </div>
+    <div class="main">
+        Update User
+        <form id="formid3" action="">
+            <input type="text" placeholder="Mobile" id="" style="margin:2px;"/>
+            <input type="text" placeholder="Email" id="" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Title" id="" style="margin:2px;"/>
+            <input type="text" placeholder="Address Line 1" id="" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Town" id="" style="margin:2px;"/>
+            <input type="text" placeholder="Eircode" id="" style="margin:2px;"/>
+            <br>
+            <button type="button" id="submitUpdate" style="margin:2px;">Update</button>
+        </form>
+    </div>
+    <div class="main">
+        Delete User
+        <form id="formid4" action="">
+            <input type="text" placeholder="First Name" id="fnamed" style="margin:2px;"/>
+            <input type="text" placeholder="Email" id="emaild" style="margin:2px;"/>
+            <br>
+            <input type="text" placeholder="Mobile" id="mobiled" style="margin:2px;"/>
+            <button type="button" id="submitDelete" style="margin:2px;">Delete</button>
+        </form>
+    </div>
+  </body>
+</html>
