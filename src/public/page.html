@@ -20,6 +20,7 @@
             contentType: "application/json",
             data: JSON.stringify({ names: $("#names").val() }),
             success: function (data) {
+              console.log(date);
               var json_data = JSON.parse(data);
               var result = "<ul>";
               $.each(json_data, function (index, item) {

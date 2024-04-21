@@ -25,23 +25,32 @@ async function run() {
 
 async function find_by_name(n){
   var name="";
+  console.log(n);
   try{
     const users=database.collection('customers');
 
     const query={firstname: n};
-    const user=await users.findOne(query);
+    const user = await users.find(query).toArray();
+    //name=JSON.stringify(user);
     console.log(user);
-    name=JSON.stringify(user);
+    return(user);
   }catch(err){
     console.log(err);
     throw(err);
   }
   finally{
     //await users.close();
-    console.log(name);
-    return(name);
+    //console.log(name);
+    console.log('sent');
+    //await client.close();
+    
+    
   }
 
 }
-run();
+
+async function add_to_db(n){
+  
+}
+//find_by_name("John");
 module.exports=find_by_name;
