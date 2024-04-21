@@ -25,23 +25,24 @@ async function run() {
 
 async function find_by_name(n){
   var name="";
-  console.log(n);
+  //console.log(n);
   try{
     const users=database.collection('customers');
 
     const query={firstname: n};
     const user = await users.find(query).toArray();
     //name=JSON.stringify(user);
-    console.log(user);
+    //console.log(user);
     return(user);
   }catch(err){
-    console.log(err);
-    throw(err);
+    //console.log(err);
+    //throw(err);
   }
   finally{
     //await users.close();
     //console.log(name);
     console.log('sent');
+    
     //await client.close();
     
     

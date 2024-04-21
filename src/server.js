@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 
 app.post("/formsearch", async (req, res) => {
-  const name = await find_by_name(req);
+  const name = await find_by_name(req.body.names);
   console.log(name);
   res.send(name);
 });
