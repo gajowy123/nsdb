@@ -20,12 +20,13 @@
             contentType: "application/json",
             data: JSON.stringify({ names: $("#names").val() }),
             success: function (data) {
-              console.log(date);
+              
               var json_data = JSON.parse(data);
+              console.log(`recieved ${json_data}`);
               var result = "<ul>";
               $.each(json_data, function (index, item) {
                 console.log(item);
-                result += `<li>${item["Title"]} ${item["First Name(s)"]} ${item["Surname"]}</li>`;
+                result += `<li>${item["title"]} ${item["firstname"]} ${item["surname"]}</li>`;
               });
               result += "</ul>";
               $("#userList").html(result);
