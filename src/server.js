@@ -3,9 +3,8 @@ const path = require("path");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
-const find_by_name = require("./db-connect");
-const add_to_db = require("./db-connect");
-const delete_from_db=require("./db-connect");
+
+const {find_by_name,add_to_db,update_user}=require("./db-connect");
 
 app.use(bodyParser.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -25,8 +24,8 @@ app.post("/formsearch", async (req, res) => {
 });
 
 app.post("/formcreate", async (req, res)=>{
-  console.log(req.body.title);
-    //await add_to_db(req.body);
+    console.log(req.body.title);
+    await add_to_db(req.body);
 })
 
 app.post("/formdelete", async (req, res)=>{

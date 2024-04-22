@@ -50,7 +50,7 @@ const database=client.db('PhoneStore');
 
 }
 
-module.exports=find_by_name;
+//exports.find_by_name=find_by_name;
 
 async function add_to_db(n){
   const client = new MongoClient(uri);  
@@ -71,7 +71,7 @@ async function add_to_db(n){
 }
 
 //add_to_db({title:"ms",firstname:"Angela",surname:"Dreake",mobile:"123123123",email:"adrake@mail.c",addresses:"[]"});
-module.exports=add_to_db;
+//exports.add_to_db=add_to_db;
 
 async function update_user(n){
   const client = new MongoClient(uri);  
@@ -97,3 +97,4 @@ async function update_user(n){
   }
 //update_user({query:"Smith",mobile:"777999000",title:null,email:null,});
 //find_by_name("John");
+module.exports={find_by_name,add_to_db,update_user};
