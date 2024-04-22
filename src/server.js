@@ -24,8 +24,13 @@ app.post("/formsearch", async (req, res) => {
 });
 
 app.post("/formcreate", async (req, res)=>{
-    console.log(req.body.title);
-    await add_to_db(req.body);
+    const data=await add_to_db(req.body);
+    res.json({ret:data});
+})
+
+app.post("/formupdate", async (req, res)=>{
+  const data=await update_user(req.body);
+  res.json({ret:data});
 })
 
 app.post("/formdelete", async (req, res)=>{

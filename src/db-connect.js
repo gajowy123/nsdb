@@ -1,19 +1,22 @@
 const { MongoClient } = require("mongodb");
+const ObjectId=require('mongodb').ObjectId;
 
 // Replace the uri string with your connection string.
 const uri = "mongodb+srv://molsze17:OxtFQHAYis4a000B@bigguy.shgnmtz.mongodb.net/?retryWrites=true&w=majority&appName=bigguy";
 
 
-async function run() {
+async function run() {                                                        // test function
+  const client = new MongoClient(uri);  
   try {
     const database = client.db('PhoneStore');
-    const users = database.collection('customers');
+    const users = database.collection('address');
 
     // Query for a movie that has the title 'Back to the Future'
-    const query = { firstname: 'John' };
+    
+    const query = { _id: new ObjectId("662662ebcf1b01731e7f90bc")};
     const user = await users.find(query).toArray();
     
-    console.log(user);
+    console.log(user[0]._id);
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -21,7 +24,7 @@ async function run() {
 }
 //run().catch(console.dir);
 
-async function find_by_name(n){
+async function find_by_name(n){                                               // finds customer by name
   
 const client = new MongoClient(uri);  
 const database=client.db('PhoneStore');
@@ -52,21 +55,30 @@ const database=client.db('PhoneStore');
 
 //exports.find_by_name=find_by_name;
 
-async function add_to_db(n){
+async function add_to_db(n){                                                  // adds customer to database
   const client = new MongoClient(uri);  
   const database=client.db('PhoneStore');
   try{
-    const users=database.collection('customers');
-    const myobj={title:n.title,firstname:n.firstname,surname:n.surname,mobile:n.mobile,email:n.email,addresses:n.addr};
-    users.insertOne(myobj,function(err,res){
+    const addrss=database.collection('address');
+    const addrobj={line1:n.line1,line2:n.line2,town:n.town,county:n.county,eircode:n.eircode};
+    await addrss.insertOne(addrobj,function(err,res){
       if(err) throw err;
     });
+    const addrid=await addrss.findOne(addrobj);
+    console.log(addrid._id);
+    const users=database.collection('customers');
+    const myobj={title:n.title,firstname:n.firstname,surname:n.surname,mobile:n.mobile,email:n.email,addresses:[addrid._id,addrid._id]};
+    await users.insertOne(myobj,function(err,res){
+      if(err) throw err;
+    });
+    return("user created");
   }catch(err){
     console.log(err);
     throw(err);
   }finally{
     console.log('added');
     await client.close();
+
   }
 }
 
@@ -82,11 +94,12 @@ async function update_user(n){
     if(n.title){myobj.title=n.title;}
     if(n.email){myobj.email=n.email;}
     if(n.mobile){myobj.mobile=n.mobile;}
-    const query={surname:n.query};
+    const query={email:n.semail};
     const newobj={$set:myobj};
     users.updateOne(query,newobj,function(err,res){
       if(err) throw err;
     });
+    return("user updated");
   }catch(err){
     console.log(err);
     throw(err);
