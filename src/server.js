@@ -18,13 +18,15 @@ app.get("/", (req, res) => {
 
 
 app.post("/formsearch", async (req, res) => {
+  console.log(req.body);
   const name = await find_by_name(req.body.names);
   console.log(name);
   res.json(name);
 });
 
 app.post("/formcreate", async (req, res)=>{
-    await add_to_db(req.body);
+  console.log(req.body.title);
+    //await add_to_db(req.body);
 })
 
 app.post("/formdelete", async (req, res)=>{

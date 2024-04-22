@@ -13,18 +13,16 @@
         // on click of submit button
         $("#submitSearch").click(function (ev) {
           let form = $("#formid1");
-          let url = form.attr("action");
+          //let url = form.attr("action");
           $.ajax({
             type: "POST",
             url: "/formsearch",
             contentType: "application/json",
             data: JSON.stringify({ names: $("#names").val() }),
             success: function (data) {
-              
-              var json_data = JSON.parse(data);
-              console.log(`recieved ${json_data}`);
+              console.log(`recieved ${data}`);
               var result = "<ul>";
-              $.each(json_data, function (index, item) {
+              $.each(data, function (index, item) {
                 console.log(item);
                 result += `<li>${item["title"]} ${item["firstname"]} ${item["surname"]}</li>`;
               });
@@ -37,7 +35,7 @@
             },
           });
         });
-        /*$("submitCreate").click(function(ev){
+      /*  $("submitCreate").click(function(ev){
             let form = $("#formid2");
             let url = form.attr("action");
             $.ajax({
